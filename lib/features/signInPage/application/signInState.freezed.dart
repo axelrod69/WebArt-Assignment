@@ -17,6 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$SignInState {
   bool get isLoading => throw _privateConstructorUsedError;
+  SignInModel? get signInModel => throw _privateConstructorUsedError;
+  SignInErrorModel? get signInErrorModel => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SignInStateCopyWith<SignInState> get copyWith =>
@@ -29,7 +31,13 @@ abstract class $SignInStateCopyWith<$Res> {
           SignInState value, $Res Function(SignInState) then) =
       _$SignInStateCopyWithImpl<$Res, SignInState>;
   @useResult
-  $Res call({bool isLoading});
+  $Res call(
+      {bool isLoading,
+      SignInModel? signInModel,
+      SignInErrorModel? signInErrorModel});
+
+  $SignInModelCopyWith<$Res>? get signInModel;
+  $SignInErrorModelCopyWith<$Res>? get signInErrorModel;
 }
 
 /// @nodoc
@@ -46,13 +54,47 @@ class _$SignInStateCopyWithImpl<$Res, $Val extends SignInState>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? signInModel = freezed,
+    Object? signInErrorModel = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      signInModel: freezed == signInModel
+          ? _value.signInModel
+          : signInModel // ignore: cast_nullable_to_non_nullable
+              as SignInModel?,
+      signInErrorModel: freezed == signInErrorModel
+          ? _value.signInErrorModel
+          : signInErrorModel // ignore: cast_nullable_to_non_nullable
+              as SignInErrorModel?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $SignInModelCopyWith<$Res>? get signInModel {
+    if (_value.signInModel == null) {
+      return null;
+    }
+
+    return $SignInModelCopyWith<$Res>(_value.signInModel!, (value) {
+      return _then(_value.copyWith(signInModel: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $SignInErrorModelCopyWith<$Res>? get signInErrorModel {
+    if (_value.signInErrorModel == null) {
+      return null;
+    }
+
+    return $SignInErrorModelCopyWith<$Res>(_value.signInErrorModel!, (value) {
+      return _then(_value.copyWith(signInErrorModel: value) as $Val);
+    });
   }
 }
 
@@ -64,7 +106,15 @@ abstract class _$$SignInStateImplCopyWith<$Res>
       __$$SignInStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading});
+  $Res call(
+      {bool isLoading,
+      SignInModel? signInModel,
+      SignInErrorModel? signInErrorModel});
+
+  @override
+  $SignInModelCopyWith<$Res>? get signInModel;
+  @override
+  $SignInErrorModelCopyWith<$Res>? get signInErrorModel;
 }
 
 /// @nodoc
@@ -79,12 +129,22 @@ class __$$SignInStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? signInModel = freezed,
+    Object? signInErrorModel = freezed,
   }) {
     return _then(_$SignInStateImpl(
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      signInModel: freezed == signInModel
+          ? _value.signInModel
+          : signInModel // ignore: cast_nullable_to_non_nullable
+              as SignInModel?,
+      signInErrorModel: freezed == signInErrorModel
+          ? _value.signInErrorModel
+          : signInErrorModel // ignore: cast_nullable_to_non_nullable
+              as SignInErrorModel?,
     ));
   }
 }
@@ -92,15 +152,25 @@ class __$$SignInStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SignInStateImpl extends _SignInState {
-  const _$SignInStateImpl({this.isLoading = true}) : super._();
+  const _$SignInStateImpl(
+      {this.isLoading = true,
+      this.signInModel = const SignInModel(),
+      this.signInErrorModel = const SignInErrorModel()})
+      : super._();
 
   @override
   @JsonKey()
   final bool isLoading;
+  @override
+  @JsonKey()
+  final SignInModel? signInModel;
+  @override
+  @JsonKey()
+  final SignInErrorModel? signInErrorModel;
 
   @override
   String toString() {
-    return 'SignInState(isLoading: $isLoading)';
+    return 'SignInState(isLoading: $isLoading, signInModel: $signInModel, signInErrorModel: $signInErrorModel)';
   }
 
   @override
@@ -109,11 +179,16 @@ class _$SignInStateImpl extends _SignInState {
         (other.runtimeType == runtimeType &&
             other is _$SignInStateImpl &&
             (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading));
+                other.isLoading == isLoading) &&
+            (identical(other.signInModel, signInModel) ||
+                other.signInModel == signInModel) &&
+            (identical(other.signInErrorModel, signInErrorModel) ||
+                other.signInErrorModel == signInErrorModel));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading);
+  int get hashCode =>
+      Object.hash(runtimeType, isLoading, signInModel, signInErrorModel);
 
   @JsonKey(ignore: true)
   @override
@@ -123,11 +198,18 @@ class _$SignInStateImpl extends _SignInState {
 }
 
 abstract class _SignInState extends SignInState {
-  const factory _SignInState({final bool isLoading}) = _$SignInStateImpl;
+  const factory _SignInState(
+      {final bool isLoading,
+      final SignInModel? signInModel,
+      final SignInErrorModel? signInErrorModel}) = _$SignInStateImpl;
   const _SignInState._() : super._();
 
   @override
   bool get isLoading;
+  @override
+  SignInModel? get signInModel;
+  @override
+  SignInErrorModel? get signInErrorModel;
   @override
   @JsonKey(ignore: true)
   _$$SignInStateImplCopyWith<_$SignInStateImpl> get copyWith =>

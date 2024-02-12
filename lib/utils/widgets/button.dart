@@ -6,8 +6,10 @@ import 'package:webart_assignment/const/styles/appColors.dart';
 class Button extends ConsumerWidget {
   final VoidCallback function;
   final String title;
+  final bool isLoading;
 
-  Button({required this.function, required this.title});
+  Button(
+      {required this.function, required this.title, required this.isLoading});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -18,11 +20,13 @@ class Button extends ConsumerWidget {
         width: 50.w,
         height: 8.h,
         decoration: BoxDecoration(
-          color: AppColors.buttonColor,
-          borderRadius: BorderRadius.circular(10.sp)
-        ),
+            color: AppColors.buttonColor,
+            borderRadius: BorderRadius.circular(10.sp)),
         child: Center(
-          child: Text(title, style: TextStyle(color: Colors.white, fontSize: 20.sp)),
+          child: isLoading
+              ? Text(title,
+                  style: TextStyle(color: Colors.white, fontSize: 20.sp))
+              : const CircularProgressIndicator(),
         ),
       ),
     );

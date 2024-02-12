@@ -1,6 +1,10 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:webart_assignment/const/apiUrl.dart';
 import 'package:webart_assignment/const/emailValidator.dart';
+import 'package:webart_assignment/features/signUpPage/domain/signUpErrorModel.dart';
+import 'package:webart_assignment/features/signUpPage/domain/signUpModel.dart';
 import 'package:webart_assignment/routes/routeNames.dart';
 import 'package:webart_assignment/utils/widgets/alert.dart';
 import '../../../network/networkApi.dart';
@@ -32,25 +36,39 @@ class SignUpNotifier extends StateNotifier<SignUpState> {
     } else if (passwordController.text != confirmPasswordController.text) {
       showToastMessage(message: 'Passwords Must Match');
     } else {
-      Navigator.pushReplacementNamed(context, RouteNames.emailVerifyPage);
+      state = state.copyWith(isLoading: false);
 
-      // state = state.copyWith(isLoading: true);
+      var response = await networkApi
+          .postRequest(url: '${ApiUrl.baseUrl}${ApiUrl.register}', body: {
+        'name': nameController.text,
+        'email': emailController.text,
+        'phone': phoneController.text,
+        'password': passwordController.text,
+        'confirm_password': confirmPasswordController.text,
+        'role': 'user'
+      });
 
-      // var response = await networkApi.postRequest(url: url, body: body);
+      if (response.statusCode == 200) {
+        Map<String, dynamic> jsonResponse = json.decode(response.body);
+        state = state.copyWith(signUpModel: SignUpModel.fromJson(jsonResponse));
 
-      // if (response.statusCode == 200) {
-      // state = state.copyWith(isLoading: false);
+        if (state.signUpModel!.statusCode == 200) {
+          state = state.copyWith(isLoading: true);
+          Navigator.pushReplacementNamed(context, RouteNames.emailVerifyPage);
+        } else {
+          Map<String, dynamic> jsonErrorResponse = json.decode(response.body);
 
-      //   if (response['statusCode'] == 200) {
-      //     Navigator.pushReplacementNamed(context, RouteNames.emailVerifyPage);
-      //   } else {
-      //     showToastMessage(message: 'An Error Occured');
-      //   }
-      // } else {
-      // state = state.copyWith(isLoading: false);
+          state = state.copyWith(
+              isLoading: true,
+              signUpErrorModel: SignUpErrorModel.fromJson(jsonErrorResponse));
 
-      //   showToastMessage(message: 'An Error Occured');
-      // }
+          showToastMessage(message: state.signUpErrorModel!.message.toString());
+        }
+      } else {
+        state = state.copyWith(isLoading: true);
+
+        showToastMessage(message: 'An Error Occured');
+      }
     }
   }
 }

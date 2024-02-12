@@ -29,7 +29,10 @@ class SignInPage extends ConsumerWidget {
                 controller: signInNotifier.passwordController,
                 label: 'Password',
               ),
-              Button(function: () {}, title: 'Sign In')
+              Button(
+                  function: () => signInNotifier.signIn(context: context),
+                  title: 'Sign In',
+                  isLoading: signInState.isLoading)
             ],
           ),
         ),

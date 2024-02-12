@@ -27,7 +27,9 @@ class SignUpPage extends ConsumerWidget {
                 TextFields(
                     controller: signUpNotifier.emailController, label: 'Email'),
                 TextFields(
-                    controller: signUpNotifier.phoneController, label: 'Phone', isNumber: true),
+                    controller: signUpNotifier.phoneController,
+                    label: 'Phone',
+                    isNumber: true),
                 TextFields(
                     controller: signUpNotifier.passwordController,
                     label: 'Password'),
@@ -37,11 +39,13 @@ class SignUpPage extends ConsumerWidget {
                 SizedBox(height: 4.h),
                 Button(
                     function: () => signUpNotifier.signUp(context),
-                    title: 'Sign Up'),
+                    title: 'Sign Up',
+                    isLoading: signUpState.isLoading),
                 SizedBox(height: 2.h),
                 GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, RouteNames.signInPage),
-                  child: const Text('Already Have An Account? Sign In'))
+                    onTap: () =>
+                        Navigator.pushNamed(context, RouteNames.signInPage),
+                    child: const Text('Already Have An Account? Sign In'))
               ],
             ),
           ),

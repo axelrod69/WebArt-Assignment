@@ -9,7 +9,7 @@ class NetworkApi {
           body: json.encode(body),
           headers: {'Content-Type': 'application/json'});
 
-      return json.decode(response.body);
+      return response;
     } catch (e) {
       return e.toString();
     }

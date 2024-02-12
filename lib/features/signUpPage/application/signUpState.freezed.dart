@@ -17,7 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$SignUpState {
   bool get isLoading => throw _privateConstructorUsedError;
-  List<dynamic> get list => throw _privateConstructorUsedError;
+  SignUpModel? get signUpModel => throw _privateConstructorUsedError;
+  SignUpErrorModel? get signUpErrorModel => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SignUpStateCopyWith<SignUpState> get copyWith =>
@@ -30,7 +31,13 @@ abstract class $SignUpStateCopyWith<$Res> {
           SignUpState value, $Res Function(SignUpState) then) =
       _$SignUpStateCopyWithImpl<$Res, SignUpState>;
   @useResult
-  $Res call({bool isLoading, List<dynamic> list});
+  $Res call(
+      {bool isLoading,
+      SignUpModel? signUpModel,
+      SignUpErrorModel? signUpErrorModel});
+
+  $SignUpModelCopyWith<$Res>? get signUpModel;
+  $SignUpErrorModelCopyWith<$Res>? get signUpErrorModel;
 }
 
 /// @nodoc
@@ -47,18 +54,47 @@ class _$SignUpStateCopyWithImpl<$Res, $Val extends SignUpState>
   @override
   $Res call({
     Object? isLoading = null,
-    Object? list = null,
+    Object? signUpModel = freezed,
+    Object? signUpErrorModel = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      list: null == list
-          ? _value.list
-          : list // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+      signUpModel: freezed == signUpModel
+          ? _value.signUpModel
+          : signUpModel // ignore: cast_nullable_to_non_nullable
+              as SignUpModel?,
+      signUpErrorModel: freezed == signUpErrorModel
+          ? _value.signUpErrorModel
+          : signUpErrorModel // ignore: cast_nullable_to_non_nullable
+              as SignUpErrorModel?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $SignUpModelCopyWith<$Res>? get signUpModel {
+    if (_value.signUpModel == null) {
+      return null;
+    }
+
+    return $SignUpModelCopyWith<$Res>(_value.signUpModel!, (value) {
+      return _then(_value.copyWith(signUpModel: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $SignUpErrorModelCopyWith<$Res>? get signUpErrorModel {
+    if (_value.signUpErrorModel == null) {
+      return null;
+    }
+
+    return $SignUpErrorModelCopyWith<$Res>(_value.signUpErrorModel!, (value) {
+      return _then(_value.copyWith(signUpErrorModel: value) as $Val);
+    });
   }
 }
 
@@ -70,7 +106,15 @@ abstract class _$$SignUpStateImplCopyWith<$Res>
       __$$SignUpStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, List<dynamic> list});
+  $Res call(
+      {bool isLoading,
+      SignUpModel? signUpModel,
+      SignUpErrorModel? signUpErrorModel});
+
+  @override
+  $SignUpModelCopyWith<$Res>? get signUpModel;
+  @override
+  $SignUpErrorModelCopyWith<$Res>? get signUpErrorModel;
 }
 
 /// @nodoc
@@ -85,17 +129,22 @@ class __$$SignUpStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isLoading = null,
-    Object? list = null,
+    Object? signUpModel = freezed,
+    Object? signUpErrorModel = freezed,
   }) {
     return _then(_$SignUpStateImpl(
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      list: null == list
-          ? _value._list
-          : list // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+      signUpModel: freezed == signUpModel
+          ? _value.signUpModel
+          : signUpModel // ignore: cast_nullable_to_non_nullable
+              as SignUpModel?,
+      signUpErrorModel: freezed == signUpErrorModel
+          ? _value.signUpErrorModel
+          : signUpErrorModel // ignore: cast_nullable_to_non_nullable
+              as SignUpErrorModel?,
     ));
   }
 }
@@ -104,25 +153,24 @@ class __$$SignUpStateImplCopyWithImpl<$Res>
 
 class _$SignUpStateImpl extends _SignUpState {
   const _$SignUpStateImpl(
-      {this.isLoading = true, final List<dynamic> list = const []})
-      : _list = list,
-        super._();
+      {this.isLoading = true,
+      this.signUpModel = const SignUpModel(),
+      this.signUpErrorModel = const SignUpErrorModel()})
+      : super._();
 
   @override
   @JsonKey()
   final bool isLoading;
-  final List<dynamic> _list;
   @override
   @JsonKey()
-  List<dynamic> get list {
-    if (_list is EqualUnmodifiableListView) return _list;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_list);
-  }
+  final SignUpModel? signUpModel;
+  @override
+  @JsonKey()
+  final SignUpErrorModel? signUpErrorModel;
 
   @override
   String toString() {
-    return 'SignUpState(isLoading: $isLoading, list: $list)';
+    return 'SignUpState(isLoading: $isLoading, signUpModel: $signUpModel, signUpErrorModel: $signUpErrorModel)';
   }
 
   @override
@@ -132,12 +180,15 @@ class _$SignUpStateImpl extends _SignUpState {
             other is _$SignUpStateImpl &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
-            const DeepCollectionEquality().equals(other._list, _list));
+            (identical(other.signUpModel, signUpModel) ||
+                other.signUpModel == signUpModel) &&
+            (identical(other.signUpErrorModel, signUpErrorModel) ||
+                other.signUpErrorModel == signUpErrorModel));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, isLoading, const DeepCollectionEquality().hash(_list));
+  int get hashCode =>
+      Object.hash(runtimeType, isLoading, signUpModel, signUpErrorModel);
 
   @JsonKey(ignore: true)
   @override
@@ -147,14 +198,18 @@ class _$SignUpStateImpl extends _SignUpState {
 }
 
 abstract class _SignUpState extends SignUpState {
-  const factory _SignUpState({final bool isLoading, final List<dynamic> list}) =
-      _$SignUpStateImpl;
+  const factory _SignUpState(
+      {final bool isLoading,
+      final SignUpModel? signUpModel,
+      final SignUpErrorModel? signUpErrorModel}) = _$SignUpStateImpl;
   const _SignUpState._() : super._();
 
   @override
   bool get isLoading;
   @override
-  List<dynamic> get list;
+  SignUpModel? get signUpModel;
+  @override
+  SignUpErrorModel? get signUpErrorModel;
   @override
   @JsonKey(ignore: true)
   _$$SignUpStateImplCopyWith<_$SignUpStateImpl> get copyWith =>
